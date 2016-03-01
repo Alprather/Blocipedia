@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+include Pundit
   def index
   end
 
