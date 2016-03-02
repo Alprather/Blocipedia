@@ -50,8 +50,8 @@ include Pundit
 
 
    def destroy
-     authorize @wiki
      @wiki = Wiki.find(params[:id])
+     authorize @wiki
      if @wiki.destroy
        flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
        redirect_to wikis_path
