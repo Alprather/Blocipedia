@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessor :login
   attr_writer :login
-  enum role: [:user, :admin]
+  enum role: [:user, :admin, :premium]
   after_initialize :set_default_role, :if => :new_record?
 
   def set_default_role
