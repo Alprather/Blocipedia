@@ -31,7 +31,11 @@ class ApplicationPolicy
   end
 
   def destroy?
+<<<<<<< HEAD
     user.present? && (record.user == user || user.admin?)
+=======
+    user.present? && (record.user == user || user.admin?) 
+>>>>>>> upgrade
   end
 
   def scope
