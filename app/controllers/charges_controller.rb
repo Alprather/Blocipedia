@@ -1,5 +1,6 @@
 class ChargesController < ApplicationController
   require "stripe"
+
   def new
     @stripe_btn_data = {
       key: Rails.configuration.stripe[:publishable_key].to_s,
