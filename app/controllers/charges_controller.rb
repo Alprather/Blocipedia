@@ -1,29 +1,35 @@
 class ChargesController < ApplicationController
-  require "stripe"
+  require 'stripe'
 
   def new
-    @stripe_btn_data = {
-      key: Rails.configuration.stripe[:publishable_key].to_s,
-      description: 'BigMoney Membership',
-      amount: 500
-    }
-  end
+    if current_user.user?
+      @stripe_btn_data = {
+        key: Rails.configuration.stripe[:publishable_key].to_s,
+        description: 'BigMoney Membership',
+        amount: 500
+      }
+    elsif current_user.premium?
+      current_user.user!
+      redirect_to root_path
+end
+end
 
   def create
     # Amount in cents
+    if current_user.user?
+      customer = Stripe::Customer.create(
+        email: params[:stripeEmail],
+        source: params[:stripeToken]
+      )
 
-    customer = Stripe::Customer.create(
-      email: params[:stripeEmail],
-      source: params[:stripeToken]
-    )
-
-    charge = Stripe::Charge.create(
-      customer: customer.id,
-      amount: 500,
-      description: 'Rails Stripe customer',
-      currency: 'usd'
-    )
-    current_user.premium!
+      charge = Stripe::Charge.create(
+        customer: customer.id,
+        amount: 500,
+        description: 'Rails Stripe customer',
+        currency: 'usd'
+      )
+      current_user.premium!
+    end
       rescue Stripe::CardError => e
         flash[:error] = e.message
         redirect_to new_charge_path

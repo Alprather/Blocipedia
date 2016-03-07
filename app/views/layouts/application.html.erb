@@ -17,7 +17,7 @@
         <% if current_user.user? %>
         <%= link_to "Upgrade To Premium", new_charge_path %>
         <% elsif current_user.premium? %>
-        
+        <%= link_to "Downgrade To Basic", new_charge_path %>
         <% end %>
       </p>
       Signed in as:

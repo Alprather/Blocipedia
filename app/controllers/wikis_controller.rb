@@ -3,7 +3,7 @@ include Pundit
 
   before_action :authorize_user, except: [:index, :show, :new, :create]
   def index
-    @wikis = Wiki.all
+    @wikis = Wiki.visible_to(current_user)
   end
 
   def show
