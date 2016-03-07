@@ -1,22 +1,29 @@
 class ChargesController < ApplicationController
   require 'stripe'
 
-  def new
-    if current_user.user?
-      @stripe_btn_data = {
-        key: Rails.configuration.stripe[:publishable_key].to_s,
-        description: 'BigMoney Membership',
-        amount: 500
-      }
-    elsif current_user.premium?
-      current_user.user!
-      redirect_to root_path
-end
-end
+def new
+  if current_user.basic?
+    @stripe_btn_data = {
+      key: Rails.configuration.stripe[:publishable_key].to_s,
+      description: 'BigMoney Membership',
+      amount: 500
+    }
+  elsif current_user.premium?
+    current_user.basic!
+    current_user.wikis.each do |wiki|
+      wiki.private = false
+      wiki.save
+    end
+    redirect_to root_path
+  else current_user.admin?
+       redirect_to root_path
+     end
+   end
+
 
   def create
     # Amount in cents
-    if current_user.user?
+    if current_user.basic?
       customer = Stripe::Customer.create(
         email: params[:stripeEmail],
         source: params[:stripeToken]

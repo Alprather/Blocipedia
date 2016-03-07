@@ -3,11 +3,11 @@ class User < ActiveRecord::Base
   attr_writer :login
   has_many :wikis
   has_many :charges
-  enum role: [:user, :admin, :premium]
+  enum role: [:basic, :admin, :premium]
   after_initialize :set_default_role, :if => :new_record?
 
   def set_default_role
-    self.role ||= :user
+    self.role ||= :basic
   end
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

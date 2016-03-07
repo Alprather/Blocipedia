@@ -4,7 +4,7 @@
   username: Faker::Internet.user_name,
   email: Faker::Internet.email,
   password: 'alicia1234',
-  role: 'user'
+  role: 'basic'
  )
 end
 users = User.all

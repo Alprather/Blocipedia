@@ -23,6 +23,8 @@
        <div class="form-group">
          <%= f.submit "Save", class: 'btn btn-success' %>
        </div>
+       <%= render partial: 'form', locals: { f: f } %>
      <% end %>
+
    </div>
  </div>

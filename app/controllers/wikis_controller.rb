@@ -8,6 +8,7 @@ include Pundit
 
   def show
     @wiki = Wiki.find(params[:id])
+
   end
 
   def new
@@ -22,6 +23,7 @@ include Pundit
      @wiki = Wiki.new
      @wiki.title = params[:wiki][:title]
      @wiki.body = params[:wiki][:body]
+     @wiki.private = params[:wiki][:private]
      @wiki.user = current_user
 
      if @wiki.save
@@ -38,6 +40,7 @@ include Pundit
    authorize @wiki
    @wiki.title = params[:wiki][:title]
    @wiki.body = params[:wiki][:body]
+   @wiki.private = params[:wiki][:private]
 
    if @wiki.save
      flash[:notice] = "Wiki was updated."
