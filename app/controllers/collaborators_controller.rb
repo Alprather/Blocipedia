@@ -1,9 +1,10 @@
 class CollaboratorsController < ApplicationController
+  include Pundit
   def new
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = @wiki.collaborators.new
     @users = User.all
-end
+  end
 
   def create
     @wiki = Wiki.find(params[:wiki_id])
