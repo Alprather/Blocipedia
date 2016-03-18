@@ -4,6 +4,7 @@ class ApplicationPolicy
   def initialize(user, record)
     @user = user
     @record = record
+
   end
 
   def index?
@@ -44,6 +45,7 @@ class ApplicationPolicy
     def initialize(user, scope)
       @user = user
       @scope = scope
+      @wiki = wiki
     end
 
     def resolve
