@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
   has_many :wikis
   has_many :charges
   has_many :collaborators
-  has_many :wikis, through: :collaborators 
+  has_many :wikis, through: :collaborators
   enum role: [:basic, :admin, :premium]
-  after_initialize :set_default_role, :if => :new_record?
+  after_initialize :set_default_role, if: :new_record?
 
   def set_default_role
     self.role ||= :basic
@@ -23,11 +23,13 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_database_authentication(warden_conditions)
-     conditions = warden_conditions.dup
-     if login = conditions.delete(:login)
-       where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
-       where(conditions.to_hash).first
-     end
-   end
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_hash).where(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]).first
+    elsif conditions.key?(:username) || conditions.key?(:email)
+      where(conditions.to_hash).first
+    end
+  end
+
+
 end

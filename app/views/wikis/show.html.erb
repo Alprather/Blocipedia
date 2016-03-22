@@ -5,10 +5,10 @@
     <p><%= markdown (@wiki.body) %></p>
   </div>
   <div class="col-md-4">
-    <% if policy(@wiki).update? %>
+    <% if policy_scope(@wiki).update? %>
     <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
     <% end %>
-    <% if policy(@wiki).destroy? %>
+    <% if policy_scope(@wiki).destroy? %>
     <%= link_to "Delete Post", @wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
     <% end %>
   </div>

@@ -77,11 +77,12 @@ class WikisController < ApplicationController
     params.require(:wiki).permit(:name, :description, :public)
   end
 
-  def authorize_user
-    wiki = Wiki.find(params[:id])
-    unless current_user.admin? || current_user == wiki.user || wiki.collaborators.include?(user)
-      flash[:alert] = 'You must be an admin to do that.'
-      redirect_to wikis_path
-    end
-  end
+  # def authorize_user
+  #   wiki = Wiki.find(params[:id])
+  #   unless current_user.admin? || current_user == wiki.user || wiki.collaborators.include?(user)
+  #     flash[:alert] = 'You must be an admin to do that.'
+  #     redirect_to wikis_path
+  #   end
+  # end
+
 end
